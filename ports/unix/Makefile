@@ -21,6 +21,7 @@ include $(TOP)/py/py.mk
 GIT_SUBMODULES = lib/axtls lib/berkeley-db-1.xx lib/libffi
 
 INC +=  -I.
+INC +=  -I./CleverIOHelper
 INC +=  -I$(TOP)
 INC += -I$(BUILD)
 
@@ -78,7 +79,8 @@ else
 # Use gcc syntax for map file
 LDFLAGS_ARCH = -Wl,-Map=$@.map,--cref -Wl,--gc-sections
 endif
-LDFLAGS = $(LDFLAGS_MOD) $(LDFLAGS_ARCH) -lm $(LDFLAGS_EXTRA) -lSDL2
+#JEM LDFLAGS = $(LDFLAGS_MOD) $(LDFLAGS_ARCH) -lm $(LDFLAGS_EXTRA) -lSDL2
+LDFLAGS = $(LDFLAGS_MOD) $(LDFLAGS_ARCH) -lm $(LDFLAGS_EXTRA) 
 
 # Flags to link with pthread library
 LIBPTHREAD = -lpthread
@@ -156,12 +158,21 @@ SRC_C = \
 	alloc.c \
 	coverage.c \
 	fatfs_port.c \
+	CleverIOHelper/gpio.c \
+	CleverIOHelper/spi.c \
+	CleverIOHelper/i2c.c \
 	$(SRC_MOD)
 
+#JEM
+#LIB_SRC_C = $(addprefix lib/,\
+#    lv_bindings/driver/SDL/SDL_monitor.c \
+#    lv_bindings/driver/SDL/SDL_mouse.c \
+#        lv_bindings/driver/SDL/modSDL.c \
+#        $(LIB_SRC_C_EXTRA) \
+#        timeutils/timeutils.c \
+#        )
+
 LIB_SRC_C = $(addprefix lib/,\
-    lv_bindings/driver/SDL/SDL_monitor.c \
-    lv_bindings/driver/SDL/SDL_mouse.c \
-	lv_bindings/driver/SDL/modSDL.c \
 	$(LIB_SRC_C_EXTRA) \
 	timeutils/timeutils.c \
 	)
@@ -169,6 +180,9 @@ LIB_SRC_C = $(addprefix lib/,\
 ifneq ($(UNAME_S),Darwin)
 LIB_SRC_C += $(addprefix lib/,\
 	lv_bindings/driver/linux/modfb.c \
+	lv_bindings/driver/linux/modILI9341.c \
+	lv_bindings/driver/linux/modSTMPE610.c \
+	lv_bindings/driver/linux/modXPT2046.c \
 	)
 endif
 

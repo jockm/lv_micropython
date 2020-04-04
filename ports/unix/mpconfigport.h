@@ -125,13 +125,16 @@
 #endif
 
 #define MICROPY_PY_LVGL             (1)
-#define MICROPY_PY_LVGL_SDL         (1)
+#define MICROPY_PY_LVGL_SDL         (0)
 #define MICROPY_PY_LVGL_LODEPNG     (1)
 #if LINUX_FRAME_BUFFER
     #define MICROPY_PY_LVGL_FB      (1)
 #else
     #define MICROPY_PY_LVGL_FB      (0)
 #endif
+#define MICROPY_PY_LVGL_ILI9341     (1)
+#define MICROPY_PY_LVGL_STMPE610    (1)
+#define MICROPY_PY_LVGL_XPT2046     (1)
 
 #define MICROPY_PY_OS_STATVFS       (1)
 #define MICROPY_PY_UTIME            (1)
@@ -203,6 +206,9 @@ extern const struct _mp_obj_module_t mp_module_lvgl;
 extern const struct _mp_obj_module_t mp_module_lvindev;
 extern const struct _mp_obj_module_t mp_module_SDL;
 extern const struct _mp_obj_module_t mp_module_fb;
+extern const struct _mp_obj_module_t mp_module_ili9341;
+extern const struct _mp_obj_module_t mp_module_stmpe610;
+extern const struct _mp_obj_module_t mp_module_xpt2046;
 extern const struct _mp_obj_module_t mp_module_lodepng;
 
 #if MICROPY_PY_UOS_VFS
@@ -254,6 +260,21 @@ extern const struct _mp_obj_module_t mp_module_lodepng;
     #else
     #define MICROPY_PY_LVGL_FB_DEF
     #endif
+	#if MICROPY_PY_LVGL_ILI9341
+	#define MICROPY_PY_LVGL_ILI9341_DEF { MP_OBJ_NEW_QSTR(MP_QSTR_ili9341), (mp_obj_t)&mp_module_ili9341 },
+	#else
+	#define MICROPY_PY_LVGL_ILI9341_DEF
+	#endif
+	#if MICROPY_PY_LVGL_STMPE610
+	#define MICROPY_PY_LVGL_STMPE610_DEF { MP_OBJ_NEW_QSTR(MP_QSTR_stmpe610), (mp_obj_t)&mp_module_stmpe610 },
+	#else
+	#define MICROPY_PY_LVGL_STMPE610_DEF
+	#endif
+	#if MICROPY_PY_LVGL_XPT2046
+	#define MICROPY_PY_LVGL_XPT2046_DEF { MP_OBJ_NEW_QSTR(MP_QSTR_XPT2046), (mp_obj_t)&mp_module_xpt2046 },
+	#else
+	#define MICROPY_PY_LVGL_XPT2046_DEF
+	#endif
     #if MICROPY_PY_LVGL_LODEPNG
     #define MICROPY_PY_LVGL_LODEPNG_DEF { MP_OBJ_NEW_QSTR(MP_QSTR_lodepng), (mp_obj_t)&mp_module_lodepng },
     #else
@@ -275,7 +296,10 @@ extern const struct _mp_obj_module_t mp_module_lodepng;
     MICROPY_PY_TERMIOS_DEF \
     MICROPY_PY_LVGL_DEF \
     MICROPY_PY_LVGL_SDL_DEF \
-    MICROPY_PY_LVGL_FB_DEF \
+	MICROPY_PY_LVGL_FB_DEF \
+	MICROPY_PY_LVGL_ILI9341_DEF \
+	MICROPY_PY_LVGL_STMPE610_DEF \
+	MICROPY_PY_LVGL_XPT2046_DEF \
     MICROPY_PY_LVGL_LODEPNG_DEF
 
 // type definitions for the specific machine

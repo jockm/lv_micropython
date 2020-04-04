@@ -33,3 +33,6 @@
 [submodule "lib/mynewt-nimble"]
 	path = lib/mynewt-nimble
 	url = https://github.com/apache/mynewt-nimble.git
+[submodule "ports/unix/CleverIOHelper"]
+	path = ports/unix/CleverIOHelper
+	url = https://github.com/jockm/CleverIOHelper.git
