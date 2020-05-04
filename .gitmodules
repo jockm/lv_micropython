@@ -36,3 +36,6 @@
 [submodule "ports/unix/CleverIOHelper"]
 	path = ports/unix/CleverIOHelper
 	url = https://github.com/jockm/CleverIOHelper.git
+[submodule "ports/unix/CleverSystemModules"]
+	path = ports/unix/CleverSystemModules
+	url = git@github.com:jockm/CleverSystemModules.git
