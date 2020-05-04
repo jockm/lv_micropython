@@ -161,6 +161,11 @@ SRC_C = \
 	CleverIOHelper/gpio.c \
 	CleverIOHelper/spi.c \
 	CleverIOHelper/i2c.c \
+	CleverSystemModules/modILI9341.c \
+	CleverSystemModules/modSTMPE610.c \
+	CleverSystemModules/modXPT2046.c \
+	CleverSystemModules/modCleverIO.c \
+	CleverSystemModules/modCleverOther.c \
 	$(SRC_MOD)
 
 #JEM
@@ -180,9 +185,6 @@ LIB_SRC_C = $(addprefix lib/,\
 ifneq ($(UNAME_S),Darwin)
 LIB_SRC_C += $(addprefix lib/,\
 	lv_bindings/driver/linux/modfb.c \
-	lv_bindings/driver/linux/modILI9341.c \
-	lv_bindings/driver/linux/modSTMPE610.c \
-	lv_bindings/driver/linux/modXPT2046.c \
 	)
 endif
 
