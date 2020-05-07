@@ -79,8 +79,12 @@ else
 # Use gcc syntax for map file
 LDFLAGS_ARCH = -Wl,-Map=$@.map,--cref -Wl,--gc-sections
 endif
-#JEM LDFLAGS = $(LDFLAGS_MOD) $(LDFLAGS_ARCH) -lm $(LDFLAGS_EXTRA) -lSDL2
 LDFLAGS = $(LDFLAGS_MOD) $(LDFLAGS_ARCH) -lm $(LDFLAGS_EXTRA) 
+
+ifeq ($(MICROPY_SDL),1)
+LDFLAGS += -lSDL2
+endif
+
 
 # Flags to link with pthread library
 LIBPTHREAD = -lpthread
@@ -168,19 +172,21 @@ SRC_C = \
 	CleverSystemModules/modCleverOther.c \
 	$(SRC_MOD)
 
-#JEM
-#LIB_SRC_C = $(addprefix lib/,\
-#    lv_bindings/driver/SDL/SDL_monitor.c \
-#    lv_bindings/driver/SDL/SDL_mouse.c \
-#        lv_bindings/driver/SDL/modSDL.c \
-#        $(LIB_SRC_C_EXTRA) \
-#        timeutils/timeutils.c \
-#        )
-
+ifeq ($(MICROPY_SDL),1)
+LIB_SRC_C = $(addprefix lib/,\
+   lv_bindings/driver/SDL/SDL_monitor.c \
+   lv_bindings/driver/SDL/SDL_mouse.c \
+       lv_bindings/driver/SDL/modSDL.c \
+       $(LIB_SRC_C_EXTRA) \
+       timeutils/timeutils.c \
+       )
+else
 LIB_SRC_C = $(addprefix lib/,\
 	$(LIB_SRC_C_EXTRA) \
 	timeutils/timeutils.c \
 	)
+
+endif
 
 ifneq ($(UNAME_S),Darwin)
 LIB_SRC_C += $(addprefix lib/,\
